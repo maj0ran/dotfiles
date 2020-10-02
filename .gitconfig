@@ -1,0 +1,14 @@
+[core]
+	editor=nvim
+[user]
+name = Marian Cichy
+email = m.cichy@pengutronix.de
+[alias]
+	a = add
+	ch = checkout
+	co = commit
+	cp = cherry-pick
+	s = status
+	r = rebase
+[pull]
+	rebase = true
