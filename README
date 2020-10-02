@@ -1,0 +1,24 @@
+These are my configuration files for my most common daily tools, including:
+
+- Window Manager 	: Sway
+- Terminal Emulator 	: Kitty
+- Shell			: Zsh
+- Terminal Multiplexer	: Tmux
+- Editor		: NeoVim
+- Versioning		: Git
+
+
+
+########## STRUCTURE OF THIS REPO ##########
+
+The directory structure of this repo is from the perspective of one's $HOME.
+All files in the root-level belong to $HOME, while .config is a directory in $HOME.
+
+########## HOW TO USE THIS REPO ##########
+
+./save will look for files with the same name as the files in this repo in your $HOME and
+copy these files into this repo. This way you can update the config-files in this repo when
+you made changes in your configs.
+
+to use all config files, just cp -r this directory to $HOME
+
