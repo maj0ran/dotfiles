@@ -241,6 +241,7 @@ set sidescrolloff=5
 " ----- Visual / UI -----
 set showbreak=↪ " this if for looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong lines
 set list " shows tabs as >
+set listchars=tab:ᐅ·
 set colorcolumn=100
 
 
