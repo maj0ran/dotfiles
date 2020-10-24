@@ -102,3 +102,4 @@ alias ls="ls --color"
 alias ll="ls -l"
 alias vi=nvim
 alias vim=nvim
+alias img="kitty +kitten icat"
