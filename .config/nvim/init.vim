@@ -22,6 +22,7 @@ Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
 Plug 'jceb/vim-orgmode' " ToDo-List in orgformat
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'powerman/vim-plugin-AnsiEsc'
 call plug#end()
 
 
@@ -121,8 +122,12 @@ set encoding=utf-8
 set splitbelow
 set splitright
 
-lua require'nvim_lsp'.clangd.setup{}
+" ----- Language Server -----
 
+lua require'nvim_lsp'.clangd.setup{on_attach=require'completion'.on_attach}
+
+lua require'nvim_lsp'.clangd.setup{}
+set omnifunc=v:lua.vim.lsp.omnifunc
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
@@ -133,14 +138,10 @@ nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 
-
-" ----- Language Server -----
-lua require'nvim_lsp'.clangd.setup{on_attach=require'completion'.on_attach}
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
 
