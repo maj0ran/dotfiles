@@ -45,7 +45,7 @@ bindsym $mod+Shift+o move container to output left
 output * bg ~/.wallpaper/space1.jpg fill
 
 output eDP-1 resolution 2560x1440 position 0,2160 scale 1
-output DP-3 resolution 2840x2160 position 0,0
+output DP-3 resolution 2560x1440 position 0,0
 
 workspace 1 output DP-3
 workspace 2 output DP-3
