@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -8,7 +15,7 @@ export ZSH="/home/mci/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster-mci"
+ZSH_THEME="mortalscumbag"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -21,7 +28,7 @@ ZSH_THEME="agnoster-mci"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
+# HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -45,7 +52,7 @@ HYPHEN_INSENSITIVE="true"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -58,7 +65,7 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-HIST_STAMPS="yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -97,9 +104,74 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+export PASSWORD_STORE_DIR=/home/mci/.password-store
+export TERM=xterm-256color
+
 alias ls="ls --color"
 alias ll="ls -l"
 alias vi=nvim
 alias vim=nvim
+alias -s c=vi
+alias -s h=vi
+alias -s cpp=vi
+alias -s hpp=vi
+alias suspend="slock systemctl suspend -i"
+alias grep="grep --color"
 alias img="kitty +kitten icat"
+
+
+if [ -d "$HOME/.local/bin" ] ; then
+          PATH="$HOME/.local/bin:$PATH"
+fi
+
+#############################
+#### Pengutronix related ####
+#############################
+
+function t() { vim ~/ptx/todo/$1/TODO.$1 }
+function s() { vim ~/ptx/timeschedule.mci/$(date +%Y)/kw$(date +%V) }
+
+alias lc=labgrid-client
+alias lcp="labgrid-client -p"
+
+function p() {
+	cmd="ptxdist "
+
+	case "$1" in
+		c) cmd=${cmd}"clean" 		;;
+		e) cmd=${cmd}"extract" 		;;
+		p) cmd=${cmd}"prepare" 		;;
+		co) cmd=${cmd}"compile" 	;;
+		i) cmd=${cmd}"install" 		;;
+		ti) cmd=${cmd}"targetinstall" 	;;
+		d) cmd=${cmd}"drop" 		;;
+		*) cmd=${cmd}"$1" 		;;
+	esac
+
+	cmd="${cmd} ""${@:2}"
+	eval $cmd
+
+}
+
+function prc() {
+	cmd="ptxdist drop $1.compile ; ptxdist targetinstall $1"
+	eval $cmd
+}
+
+alias d2="ssh dude02"
+
+function p-local() {
+	ptxdist_path=${HOME}'/devel/src/ptxdist/bin'
+	case "$1" in
+		on) PATH=$ptxdist_path:$PATH ;;
+		off) PATH=${PATH#"$ptxdist_path:"} ;;
+	esac
+}
+
+function tasktime() {
+	ptx_timeschedule_cache
+	ptx_calendar_cache
+	ptx_tasklist -r review -g $1
+}
