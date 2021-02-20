@@ -17,12 +17,14 @@ Plug 'privat@privat.scm.pengutronix.de:fsc/vim-ptx-timesheet.git'
 " extern
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Treebar
 Plug 'yuttie/comfortable-motion.vim' " smooth scrolling
-Plug 'vim-airline/vim-airline' " better info bar
+"Plug 'vim-airline/vim-airline' " better info bar
 Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
 Plug 'jceb/vim-orgmode' " ToDo-List in orgformat
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 call plug#end()
 
 
@@ -107,7 +109,7 @@ hi ErrorMsg ctermfg=red ctermbg=none
 hi Pmenu ctermbg=white ctermfg=black
 hi PmenuSel ctermbg=blue ctermfg=white
 match ExtraWhitespace /\s\+$/
-source $HOME/.config/nvim/meson.vim
+"source $HOME/.config/nvim/meson.vim
 
 " ----- Spell check -----
 
@@ -124,10 +126,16 @@ set splitright
 
 " ----- Language Server -----
 
-lua require'nvim_lsp'.clangd.setup{on_attach=require'completion'.on_attach}
-
-lua require'nvim_lsp'.clangd.setup{}
+lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
+autocmd BufEnter * lua require'completion'.on_attach()
+"lua require'lspconfig'.clangd.setup{}
 set omnifunc=v:lua.vim.lsp.omnifunc
+
+lua << EOF
+vim.lsp.set_log_level("debug")
+EOF
+
+
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
@@ -145,3 +153,23 @@ set completeopt=menuone,noinsert,noselect
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" ----- lightline -----
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close'] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
+      \ }
+      \ }
+
+autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+set showtabline=2
