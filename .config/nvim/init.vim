@@ -25,6 +25,7 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
+Plug 'rhysd/vim-clang-format' " Format C-Family Code
 call plug#end()
 
 
@@ -67,13 +68,13 @@ nnoremap <leader>Y "ayy
 :command Tree NERDTreeToggle
 
 " ----- Tab Settings -----
-set tabstop=8
-set softtabstop=0
-set shiftwidth=8
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 set autoindent
 set smartindent
 set autoindent
-set noexpandtab
+set expandtab
 set smarttab
 
 	" --- Python ---
@@ -145,6 +146,9 @@ nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+
+map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+let g:python3_host_prog='/usr/bin/python'
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
