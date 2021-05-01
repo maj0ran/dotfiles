@@ -20,5 +20,5 @@ All files in the root-level belong to $HOME, while .config is a directory in $HO
 copy these files into this repo. This way you can update the config-files in this repo when
 you made changes in your configs.
 
-to use all config files, just cp -r this directory to $HOME
+to use all config files, just cp -r this directory to $HOME, excluding .git, README and save.sh
 
