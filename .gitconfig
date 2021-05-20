@@ -1,8 +1,8 @@
 [core]
 	editor=nvim
 [user]
-name = Marian Cichy
-email = m.cichy@pengutronix.de
+    name = Marian Cichy
+    email = Mn.cichy@gmail.com
 [alias]
 	a = add
 	ch = checkout
