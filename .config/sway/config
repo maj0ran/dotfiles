@@ -33,6 +33,9 @@ set $browser firefox
 set $calc speedcrunch
 set $menu bemenu-run -l 20 -H 40 --hb=#ababab --fn=FiraCode-Regular.ttf 36
 
+set $menu wofi --show=drun
+
+bindsym $mod+d exec $menu
 #Take screenshot
 bindsym Print exec grim screenshot.png
 
@@ -44,20 +47,20 @@ bindsym $mod+Shift+o move container to output left
 
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
-output eDP-1 resolution 920x1080 position 0,0 scale 1
-output HDMI-A-1 resolution 1920x1080@60Hz position 0,0
-
-workspace 1 output DP-3
-workspace 2 output DP-3
-workspace 3 output DP-3
-workspace 4 output DP-3
-workspace 5 output DP-3
-
-workspace 6 output eDP-1
-workspace 7 output eDP-1
-workspace 8 output eDP-1
-workspace 9 output eDP-1
-workspace 0 output eDP-1
+#output eDP-1 resolution 920x1080 position 0,0 scale 1
+#output HDMI-A-1 resolution 1920x1080@60Hz position 0,0
+#
+#workspace 1 output DP-3
+#workspace 2 output DP-3
+#workspace 3 output DP-3
+#workspace 4 output DP-3
+#workspace 5 output DP-3
+#
+#workspace 6 output eDP-1
+#workspace 7 output eDP-1
+#workspace 8 output eDP-1
+#workspace 9 output eDP-1
+#workspace 0 output eDP-1
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -88,6 +91,11 @@ workspace 0 output eDP-1
 #
 
 input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout us
+    xkb_variant altgr-intl
+}
+
+input "1241:1031:USB-HID_Keyboard" {
     xkb_layout us
     xkb_variant altgr-intl
 }
@@ -238,6 +246,10 @@ mode "resize" {
 }
 bindsym $mod+g mode "resize"
 
-exec_always ~/.config/waybar/waybar.sh
+#exec_always ~/.config/waybar/waybar.sh
 
 include /etc/sway/config.d/*
+
+bar { 
+  swaybar_command waybar
+}
