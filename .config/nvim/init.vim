@@ -11,28 +11,33 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 call plug#begin()
-" intern
-Plug 'intern@intern.scm.pengutronix.de:/ptx-vim-syntax.git', " PTX files syntax
-Plug 'privat@privat.scm.pengutronix.de:fsc/vim-ptx-timesheet.git'
-" extern
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Treebar
 Plug 'yuttie/comfortable-motion.vim' " smooth scrolling
-"Plug 'vim-airline/vim-airline' " better info bar
+Plug 'vim-airline/vim-airline' " better info bar
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
 Plug 'jceb/vim-orgmode' " ToDo-List in orgformat
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
+"Plug 'itchyny/lightline.vim'
+"Plug 'mengelbrecht/lightline-bufferline'
 Plug 'rhysd/vim-clang-format' " Format C-Family Code
 Plug 'wojciechkepka/bogster' " Color-scheme bogster
+Plug 'dikiaap/minimalist'
+Plug 'chriskempson/base16-vim'
+Plug 'sstallion/vim-wtf'
+Plug 'fcpg/vim-fahrenheit'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'folke/lsp-colors.nvim'
 call plug#end()
 
 
 " ----- airline configuration -----
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
+let g:airline_theme='term'
+
 
 
 " ----- Keymaps -----
@@ -95,6 +100,7 @@ set showbreak=↪ " this if for looooooooooooooooooooooooooooooooooooooooooooooo
 set list " shows tabs as >
 set listchars=tab:ᐅ·
 set colorcolumn=100
+set number
 
 
 " ----- Syntax Highlighting -----
@@ -111,6 +117,7 @@ hi ErrorMsg ctermfg=red ctermbg=none
 hi Pmenu ctermbg=white ctermfg=black
 hi PmenuSel ctermbg=blue ctermfg=white
 match ExtraWhitespace /\s\+$/
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=white
 "source $HOME/.config/nvim/meson.vim
 
 " ----- Spell check -----
@@ -180,10 +187,11 @@ end
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local servers = { "clangd", "pyright", "rust_analyzer", "tsserver" }
+local servers = { "clangd", "gopls", "pyright", "rust_analyzer", "tsserver", "pyls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
+
 EOF
 
 " Use completion-nvim in every buffer
@@ -197,24 +205,27 @@ set completeopt=menuone,noinsert,noselect
 "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ----- lightline -----
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'tabline': {
-      \   'left': [ ['buffers'] ],
-      \   'right': [ ['close'] ]
-      \ },
-      \ 'component_expand': {
-      \   'buffers': 'lightline#bufferline#buffers'
-      \ },
-      \ 'component_type': {
-      \   'buffers': 'tabsel'
-      \ }
-      \ }
+"let g:lightline = {
+"      \ 'colorscheme': 'one',
+"      \ 'active': {
+"      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
+"      \ },
+"      \ 'tabline': {
+"      \   'left': [ ['buffers'] ],
+"      \   'right': [ ['close'] ]
+"      \ },
+"      \ 'component_expand': {
+"      \   'buffers': 'lightline#bufferline#buffers'
+"      \ },
+"      \ 'component_type': {
+"      \   'buffers': 'tabsel'
+"      \ }
+"      \ }
 
-autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+"autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 set showtabline=2
 
-colorscheme bogster
+colorscheme anderson
+hi Normal ctermbg=None
+hi nonText ctermbg=None
+hi Comment ctermfg=Darkgray
