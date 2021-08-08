@@ -19,6 +19,7 @@ Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
 Plug 'jceb/vim-orgmode' " ToDo-List in orgformat
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 "Plug 'itchyny/lightline.vim'
 "Plug 'mengelbrecht/lightline-bufferline'
@@ -30,6 +31,9 @@ Plug 'sstallion/vim-wtf'
 Plug 'fcpg/vim-fahrenheit'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'folke/lsp-colors.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'lervag/vimtex' " latex
+Plug 'DingDean/wgsl.vim'
 call plug#end()
 
 
@@ -38,6 +42,13 @@ let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:airline_theme='term'
 
+
+" ---- vimtex configuration -----
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
 
 " ----- Keymaps -----
@@ -201,8 +212,8 @@ autocmd BufEnter * lua require'completion'.on_attach()
 set completeopt=menuone,noinsert,noselect
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
-"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ----- lightline -----
 "let g:lightline = {
@@ -224,6 +235,20 @@ set completeopt=menuone,noinsert,noselect
 
 "autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 set showtabline=2
+
+" Treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c" },  -- list of language that will be disabled
+  },
+}
+EOF
+
+autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix= " » ", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
 colorscheme anderson
 hi Normal ctermbg=None
