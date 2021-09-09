@@ -11,30 +11,35 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall
 endif
 call plug#begin()
+" Plugins for NeoVim LSP Feature
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/lsp_extensions.nvim'
+"
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Treebar
 Plug 'yuttie/comfortable-motion.vim' " smooth scrolling
 Plug 'vim-airline/vim-airline' " better info bar
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
 Plug 'jceb/vim-orgmode' " ToDo-List in orgformat
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'powerman/vim-plugin-AnsiEsc'
-"Plug 'itchyny/lightline.vim'
-"Plug 'mengelbrecht/lightline-bufferline'
 Plug 'rhysd/vim-clang-format' " Format C-Family Code
-Plug 'wojciechkepka/bogster' " Color-scheme bogster
-Plug 'dikiaap/minimalist'
-Plug 'chriskempson/base16-vim'
-Plug 'sstallion/vim-wtf'
-Plug 'fcpg/vim-fahrenheit'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lervag/vimtex' " latex
-Plug 'DingDean/wgsl.vim'
+Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
+Plug 'DingDean/wgsl.vim' " Syntax Highlight for WGSL Shader
+Plug 'voldikss/vim-floaterm' " open floating terminal in vim
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable'} " R language
 call plug#end()
+
+" ----- float term configuration -----
+let g:floaterm_keymap_new    = '<F7>'
+let g:floaterm_keymap_prev   = '<F8>'
+let g:floaterm_keymap_next   = '<F9>'
+let g:floaterm_keymap_toggle = '<F5>'
+
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.95
 
 
 " ----- airline configuration -----
@@ -154,7 +159,7 @@ local on_attach = function(client, bufnr)
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
+  -- Mappings --
   local opts = { noremap=true, silent=true }
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -198,11 +203,31 @@ end
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local servers = { "clangd", "gopls", "pyright", "rust_analyzer", "tsserver", "pyls" }
+local servers = { "clangd", "rust_analyzer" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
 
+EOF
+
+lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- This will disable virtual text, like doing:
+    -- let g:diagnostic_enable_virtual_text = 0
+    virtual_text = false,
+
+    -- This is similar to:
+    -- let g:diagnostic_show_sign = 1
+    -- To configure sign display,
+    --  see: ":help vim.lsp.diagnostic.set_signs()"
+    signs = true,
+
+    -- This is similar to:
+    -- "let g:diagnostic_insert_delay = 1"
+    update_in_insert = false,
+  }
+)
 EOF
 
 " Use completion-nvim in every buffer
