@@ -30,7 +30,12 @@ Plug 'tikhomirov/vim-glsl' " Syntax highlighting for GLSL files
 Plug 'DingDean/wgsl.vim' " Syntax Highlight for WGSL Shader
 Plug 'voldikss/vim-floaterm' " open floating terminal in vim
 Plug 'jalvesaq/Nvim-R', {'branch': 'stable'} " R language
+Plug 'vijaymarupudi/nvim-fzf' " requires the nvim-fzf library
+Plug 'vijaymarupudi/nvim-fzf-commands'
 call plug#end()
+
+" ----- fzf bindings -----
+noremap <leader>s <cmd>lua require("fzf-commands").bufferpicker2()<cr>
 
 " ----- float term configuration -----
 let g:floaterm_keymap_new    = '<F7>'
@@ -268,14 +273,14 @@ require'nvim-treesitter.configs'.setup {
   ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
-    disable = { "c" },  -- list of language that will be disabled
+    disable = { },  -- list of language that will be disabled
   },
 }
 EOF
 
 autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs :lua require'lsp_extensions'.inlay_hints{ prefix= " » ", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
-colorscheme anderson
-hi Normal ctermbg=None
-hi nonText ctermbg=None
-hi Comment ctermfg=Darkgray
+colorscheme molokai
+"hi Normal ctermbg=None
+"hi nonText ctermbg=None
+"hi Comment ctermfg=Darkgray
