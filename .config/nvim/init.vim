@@ -16,13 +16,11 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/lsp_extensions.nvim'
 "
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " Treebar
 Plug 'yuttie/comfortable-motion.vim' " smooth scrolling
 Plug 'vim-airline/vim-airline' " better info bar
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jceb/vim-orgmode' " ToDo-List in orgformat
 Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'rhysd/vim-clang-format' " Format C-Family Code
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lervag/vimtex' " latex
@@ -90,9 +88,6 @@ xnoremap X "_X
 nnoremap <leader>y "Ayy
 nnoremap <leader>d "Add
 nnoremap <leader>Y "ayy
-
-" ----- Commands -----
-:command Tree NERDTreeToggle
 
 " ----- Tab Settings -----
 set tabstop=4
