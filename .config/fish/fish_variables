@@ -6,6 +6,9 @@ SETUVAR _fish_abbr_g:git
 SETUVAR _fish_abbr_v:nvim
 SETUVAR _fish_abbr_vi:nvim
 SETUVAR _fish_abbr_vim:nvim
+SETUVAR _fisher_edc_2F_bass_files:/home/mrn/\x2econfig/fish/functions/__bass\x2epy\x1e/home/mrn/\x2econfig/fish/functions/bass\x2efish
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:/home/mrn/\x2econfig/fish/functions/fisher\x2efish\x1e/home/mrn/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1eedc/bass
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7
